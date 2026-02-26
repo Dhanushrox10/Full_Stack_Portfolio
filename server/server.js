@@ -1,11 +1,9 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import cors from "cors";
-import * as Brevo from "@getbrevo/brevo";
-
-dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -13,6 +11,7 @@ const io = new Server(server, { cors: { origin: "*" } });
 
 app.use(cors());
 app.use(express.json());
+dotenv.config();
 
 // TEST ROUTE
 app.get("/", (req, res) => {
@@ -22,13 +21,24 @@ app.get("/", (req, res) => {
 let adminSocketId = null;
 let users = {}; // { socketId: { email, messages: [], emailSent } }
 
-// ✅ Brevo Email Setup (Replaces Nodemailer)
-const brevo = new Brevo.TransactionalEmailsApi();
+// Nodemailer - Gmail with App Password
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASS, // App password
+  },
+  tls: {
+    rejectUnauthorized: false, // Fix self-signed certificate error
+  },
+});
 
-brevo.setApiKey(
-  Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY,
-);
+// Optional: check SMTP connection
+console.log("Checking SMTP connection...");
+transporter.verify((err, success) => {
+  if (err) console.log("SMTP connection failed:", err);
+  else console.log("SMTP server is ready");
+});
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
@@ -67,19 +77,11 @@ io.on("connection", (socket) => {
     // Send email only for first message after email is saved
     if (users[socket.id].email && !users[socket.id].emailSent && text) {
       try {
-        console.log("Attempting to send email...");
-        await brevo.sendTransacEmail({
-          sender: {
-            email: process.env.SENDER_EMAIL,
-            name: "Portfolio Chat",
-          },
-          to: [
-            {
-              email: "smdhanush10@gmail.com", // your email for testing
-            },
-          ],
+        await transporter.sendMail({
+          from: process.env.GMAIL_USER,
+          to: process.env.GMAIL_USER,
           subject: `New Portfolio Chat from ${users[socket.id].email}`,
-          htmlContent: `
+          html: `
             <h3>New Chat Started</h3>
             <p><b>User Email:</b> ${users[socket.id].email}</p>
             <p><b>Message:</b> ${text}</p>
@@ -89,12 +91,9 @@ io.on("connection", (socket) => {
         users[socket.id].emailSent = true; // prevent further emails
         console.log("First question email sent successfully");
       } catch (err) {
-  if (err.response) {
-    console.error("Brevo error response:", err.response.body);
-  } else {
-    console.error("Brevo error:", err);
-  }
-}
+        console.error("Error sending email:", err);
+      }
+    }
 
     // Send to admin panel if online
     if (adminSocketId) {
