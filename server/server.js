@@ -1,9 +1,9 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import cors from "cors";
+import SibApiV3Sdk from "@sendinblue/client";
 
 dotenv.config();
 
@@ -15,40 +15,26 @@ app.use(cors());
 app.use(express.json());
 
 // -----------------------
-// Nodemailer setup (Gmail + App Password)
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.GMAIL_USER,      // your Gmail
-    pass: process.env.GMAIL_APP_PASS,  // Gmail App Password
-  },
-});
+// Brevo API setup
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
+defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
 
-// Verify SMTP connection
-transporter.verify((err, success) => {
-  if (err) console.log("SMTP connection failed:", err);
-  else console.log("SMTP server ready ✔️");
-});
+const brevoApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
-// -----------------------
-// Test Email Route
-app.get("/test-email", async (req, res) => {
+async function sendEmail(to, subject, htmlContent) {
   try {
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER,
-      subject: "Test Email from Portfolio",
-      html: "<p>Hello! This is a test email from your backend.</p>",
+    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail({
+      to: [{ email: to }],
+      sender: { email: process.env.BREVO_USER },
+      subject,
+      htmlContent,
     });
-    res.send("Test email sent!");
-    console.log("Test email sent ✔️");
+    await brevoApi.sendTransacEmail(sendSmtpEmail);
+    console.log(`Email sent to ${to} ✔️`);
   } catch (err) {
-    console.error("Test email failed:", err);
-    res.status(500).send("Failed to send test email");
+    console.error("Brevo API email error:", err);
   }
-});
+}
 
 // -----------------------
 // Users & Admin
@@ -85,22 +71,16 @@ io.on("connection", (socket) => {
 
     // Send email only for first message
     if (users[socket.id].email && !users[socket.id].emailSent && text) {
-      try {
-        await transporter.sendMail({
-          from: process.env.GMAIL_USER,
-          to: process.env.GMAIL_USER,
-          subject: `New Portfolio Chat from ${users[socket.id].email}`,
-          html: `
-            <h3>New Chat Started</h3>
-            <p><b>User Email:</b> ${users[socket.id].email}</p>
-            <p><b>Message:</b> ${text}</p>
-          `,
-        });
-        users[socket.id].emailSent = true;
-        console.log("Email sent successfully ✔️");
-      } catch (err) {
-        console.error("Error sending email:", err);
-      }
+      await sendEmail(
+        process.env.BREVO_USER, // You receive email here
+        `New Portfolio Chat from ${users[socket.id].email}`,
+        `
+          <h3>New Chat Started</h3>
+          <p><b>User Email:</b> ${users[socket.id].email}</p>
+          <p><b>Message:</b> ${text}</p>
+        `
+      );
+      users[socket.id].emailSent = true;
     }
 
     // Send message to admin if online
