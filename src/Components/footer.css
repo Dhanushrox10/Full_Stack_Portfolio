@@ -1,0 +1,118 @@
+.footer {
+  background-color: #240073;
+}
+
+.footer-0 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 70px;
+  padding: 30px 30px;
+  margin: 0 16%;
+  background-color: #240073;
+  color: white;
+  line-height: 30px;
+}
+
+.footer-1 h2,
+.footer-2 h2,
+.footer-3 h2 {
+  margin-bottom: 6px;
+}
+
+.footer-3-menu {
+  list-style: none;
+  font-size: 1rem;
+  padding: 0;
+}
+
+.footer-3-menu li a {
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.footer-3-menu li a:hover {
+  transform: translateX(4px);
+}
+
+.footer-3 p {
+  margin: 2px 0;
+}
+
+.footer-3 p i {
+  margin-right: 8px;
+}
+
+/* Social icons */
+/* --> Refer hero.css for social icons styling, as they are reused here */
+.footer-social-icons {
+  margin-top: 7px;
+}
+
+.footer .footer-social-icons a {
+  font-size: 1.3rem;
+  padding: 8px 14px;
+}
+
+.footer hr {
+  border: none;
+  height: 0.7px;
+  background: white;
+  margin: 0;
+}
+
+/* Last line */
+.last-line {
+  padding: 10px 0;
+  margin: 0 12%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Heart animation */
+.emoji-spin {
+  display: inline-block;
+  animation: pulse 1s infinite;
+  margin: 0 5px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .footer-0 {
+    margin: 0;
+    padding: 14px 26px;
+    gap: 16px;
+    flex-direction: column; /* stack sections vertically */
+    align-items: flex-start; /* keeps text left-aligned */
+  }
+
+  .footer-1,
+  .footer-2,
+  .footer-3 {
+    width: 100%;
+  }
+
+  .footer hr {
+    margin: 0 16px;
+  }
+
+  .last-line {
+    margin: 0 16px;
+  }
+}

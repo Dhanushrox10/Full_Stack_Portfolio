@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Global font */
+body {
+  margin: 0;
+  padding-top: 65px;
+  font-family: "Poppins";
+  background-color: #ffffff;
+  color: #000000;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling for navbar links */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 65px; /* exact navbar height */
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Scroll animations */
+.slide-in-left,
+.slide-in-right,
+.slide-in-up,
+.slide-in-down {
+  opacity: 0;
+  backface-visibility: hidden; /* Critical blur fix */
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.slide-in-left {
+  transform: translateX(-70px);
+}
+
+.slide-in-right {
+  transform: translateX(70px);
+}
+
+.slide-in-up {
+  transform: translateY(70px);
+}
+
+.slide-in-down {
+  transform: translateY(-70px);
+}
+
+.in-view {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+.hero img {
+  display: block;
+}
+
+/*Autofill*/
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: black !important;
+  caret-color: black;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.contact input:-webkit-autofill,
+.contact textarea:-webkit-autofill,
+.contact input:-webkit-autofill:hover,
+.contact input:-webkit-autofill:focus {
+  -webkit-text-fill-color: black !important;
+  box-shadow: 0 0 0px 1000px #e2e9e8 inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px #e2e9e8 inset !important;
+}
+
+/* Disable drag only for images */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Disable selection for UI elements only */
+button,
+.chat-toggle,
+.chat-avatar {
+  user-select: none;
+}
+
+/* Prevent text selection on double click for icons/emojis */
+.chat-toggle {
+  -webkit-user-select: none;
+  user-select: none;
+}

@@ -1,0 +1,105 @@
+.skills {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px 0px;
+  background: #561b9e;
+  text-align: center;
+  color: white;
+}
+
+.skills-container h2 {
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+}
+.skills-container h2 span {
+  color: #feb21a;
+}
+
+.skills-container h2 i {
+  margin-right: 8px;
+}
+
+.image-icons {
+  display: flex;
+  background-color: #30006b;
+  border-radius: 15px;
+  justify-content: center;
+  padding: 2% 2%;
+  margin: 13px 12%;
+  flex-wrap: wrap;
+  gap: 35px;
+}
+
+/*Each skill card*/
+.skill {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 3px 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  width: 180px;
+  height: 130px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.skill:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: 0.1s ease;
+}
+
+.skill img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.skill h5 {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.skill:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .skills {
+    padding: 30px 16px;
+  }
+
+  .skills-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .image-icons {
+    margin: 10px 0;
+    padding: 16px;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .skill {
+    width: 140px;
+    height: 110px;
+    padding: 12px;
+  }
+
+  .skill img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .skill h5 {
+    font-size: 0.8rem;
+  }
+}

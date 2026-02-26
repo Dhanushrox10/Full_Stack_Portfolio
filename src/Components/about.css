@@ -1,0 +1,139 @@
+.about-me {
+  padding: 40px 2% 50px 2%;
+  background: #f6f2ff;
+}
+
+.about-container {
+  max-width: 1150px;
+  margin: auto;
+}
+
+.about-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+.about-heading span {
+  color: rgb(95, 0, 184);
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 99px;
+  flex-wrap: wrap;
+}
+
+.profile-image-2 {
+  flex: 1;
+  text-align: center;
+  perspective: 800px;
+}
+
+.pic-2 {
+  width: 360px;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  transform-style: preserve-3d;
+}
+
+.about-text {
+  flex: 2;
+}
+
+.about-text h2 {
+  margin-bottom: 5px;
+}
+
+.about-text h4 {
+  margin-bottom: 15px;
+}
+
+.about-text p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.label {
+  color: #5f00b8;
+  font-weight: 500;
+}
+
+.about-button {
+  padding: 14px 18px;
+  font-size: 16px;
+  background: rgb(95, 0, 184);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  align-self: flex-start;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0);
+}
+
+.shake-arrow {
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.about-button:hover .shake-arrow {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-me {
+    padding: 30px 20px 30px;
+  }
+
+  .about-heading {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    gap: 30px;
+  }
+  .about-text p {
+    text-align: justify;
+  }
+  .about-text button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .profile-image-2 {
+    width: 100%;
+  }
+
+  .pic-2 {
+    width: 240px;
+    max-width: 90%;
+    height: auto;
+  }
+
+  .about-text {
+    width: 100%;
+  }
+
+  .about-text h2 {
+    font-size: 1.6rem;
+  }
+
+  .about-text h4 {
+    font-size: 1.1rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .about-button {
+    align-self: center;
+  }
+}

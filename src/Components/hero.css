@@ -1,0 +1,213 @@
+.hero {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-top: 0px;
+}
+
+/* Particles background (only inside hero) */
+#tsparticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 7% 15%;
+  gap: 40px; /* space bet L and R*/
+}
+
+.hero-left {
+  max-width: 600px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-left h1 {
+  font-size: 4.5rem;
+}
+
+.hero-left h2 {
+  font-size: 4rem;
+}
+
+.hero-left p {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about-btn {
+  padding: 13px 18px;
+  font-size: 16px;
+  background: rgb(95, 0, 184);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  align-self: flex-start;
+  box-shadow: 0px 0px 9px rgba(0, 0, 0);
+  text-decoration: none;
+}
+
+.arrow-icon {
+  margin-left: 2px;
+  display: inline-block; /*used when we want to transform the icon,a,span*/
+  transition: transform 0.4s ease; 
+}
+
+.about-btn:hover .arrow-icon {
+  transform: translateY(4px);
+}
+
+/* Social icons row */
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  color: #fff; 
+  background-color: black; 
+  border-radius: 50%; 
+  padding: 8px 14px;
+  display: inline-block; /* Ensures the icon is contained in the background and all icons stays side by side */
+  transition: transform 0.25s ease;
+}
+.social-icons a i{
+  position: relative;
+  top: 1px;
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
+}
+
+.social-icons .linkedin:hover {
+  background-color: #0077b5; 
+  color: white; 
+}
+
+.social-icons .github:hover {
+  background-color: #202020; 
+  color: white;
+}
+
+.social-icons .instagram:hover {
+  background-color: #E1306C; 
+  color: white;
+}
+
+.social-icons .gmail:hover {
+  background-color: #ff0000; 
+  color: white;
+}
+
+.hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  perspective: 800px;
+}
+
+.hero-image {
+  width: 370px;
+  max-width: 100%;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  transform-style: preserve-3d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .hero {
+    height: auto;          /* let content define height */
+    min-height: auto;     
+    padding-top: 20px;    
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* start at top */
+    align-items: center; 
+  }
+
+  .content {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;  
+    text-align: left;
+    padding: 0 20px 0; 
+    gap: 30px;
+  }
+
+  .hero-left {
+    max-width: 100%;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-left h1 {
+    font-size: 2.8rem;
+  }
+
+  .hero-left h2 {
+    font-size: 2.8rem;
+  }
+
+  .hero-left p {
+    font-size: 1.2rem;
+  }
+
+  .about-btn {
+    align-self: flex-start;
+    font-size: 15px;
+    padding: 14px 18px;
+  }
+
+  .social-icons {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero-right-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    margin-top: 0;
+  }
+
+  .hero-right {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image {
+    width: 250px;       
+    max-width: 85%;
+    height: auto;
+    margin-top: 0;  
+    display: block;
+  }
+
+  /* Prevent flex overflow issues */
+  .content > * {
+    min-width: 0;
+  }
+}
