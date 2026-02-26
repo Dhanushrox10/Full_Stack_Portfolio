@@ -37,14 +37,13 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-// TEST EMAIL ROUTE
 app.get("/test-email", async (req, res) => {
   try {
     await transporter.sendMail({
       from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER, // your Gmail for testing
+      to: process.env.GMAIL_USER,
       subject: "Test Email from Portfolio",
-      html: "<p>Hello! This is a test email from your Render backend.</p>",
+      html: "<p>Hello! This is a test email from Render backend.</p>",
     });
     res.send("Test email sent!");
     console.log("Test email sent ✔️");
@@ -82,19 +81,16 @@ io.on("connection", (socket) => {
     console.log("user-message event fired:", { text, email });
     if (!users[socket.id]) return;
 
-    // Save user email
     if (email && !users[socket.id].email) users[socket.id].email = email;
-
-    if (text === "User joined") return; // skip system msg
+    if (text === "User joined") return;
 
     users[socket.id].messages.push({ sender: "user", text });
 
-    // Send email only for first message
     if (users[socket.id].email && !users[socket.id].emailSent && text) {
       try {
         await transporter.sendMail({
           from: process.env.GMAIL_USER,
-          to: process.env.GMAIL_USER, // where you want notifications
+          to: process.env.GMAIL_USER,
           subject: `New Portfolio Chat from ${users[socket.id].email}`,
           html: `
             <h3>New Chat Started</h3>
@@ -109,7 +105,6 @@ io.on("connection", (socket) => {
       }
     }
 
-    // Send message to admin if online
     if (adminSocketId) {
       io.to(adminSocketId).emit("new-message", {
         userId: socket.id,
