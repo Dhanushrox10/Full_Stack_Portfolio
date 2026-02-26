@@ -27,7 +27,7 @@ const brevo = new Brevo.TransactionalEmailsApi();
 
 brevo.setApiKey(
   Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
+  process.env.BREVO_API_KEY,
 );
 
 io.on("connection", (socket) => {
@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
     // Send email only for first message after email is saved
     if (users[socket.id].email && !users[socket.id].emailSent && text) {
       try {
-            console.log("Attempting to send email...");
+        console.log("Attempting to send email...");
         await brevo.sendTransacEmail({
           sender: {
             email: process.env.SENDER_EMAIL,
@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
           },
           to: [
             {
-              email: process.env.SENDER_EMAIL,
+              email: "smdhanush10@gmail.com", // your email for testing
             },
           ],
           subject: `New Portfolio Chat from ${users[socket.id].email}`,
@@ -89,9 +89,12 @@ io.on("connection", (socket) => {
         users[socket.id].emailSent = true; // prevent further emails
         console.log("First question email sent successfully");
       } catch (err) {
-        console.error("Error sending email:", err);
-      }
-    }
+  if (err.response) {
+    console.error("Brevo error response:", err.response.body);
+  } else {
+    console.error("Brevo error:", err);
+  }
+}
 
     // Send to admin panel if online
     if (adminSocketId) {
