@@ -1,9 +1,9 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import cors from "cors";
-import sgMail from "@sendgrid/mail";
 
 dotenv.config();
 
@@ -15,18 +15,32 @@ app.use(cors());
 app.use(express.json());
 
 // -----------------------
-// SendGrid setup
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// Nodemailer setup (Gmail + App Password)
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.GMAIL_USER,      // your Gmail
+    pass: process.env.GMAIL_APP_PASS,  // Gmail App Password
+  },
+});
+
+// Verify SMTP connection
+transporter.verify((err, success) => {
+  if (err) console.log("SMTP connection failed:", err);
+  else console.log("SMTP server ready ✔️");
+});
 
 // -----------------------
 // Test Email Route
 app.get("/test-email", async (req, res) => {
   try {
-    await sgMail.send({
-      from: process.env.MY_EMAIL,
-      to: process.env.MY_EMAIL,
+    await transporter.sendMail({
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
       subject: "Test Email from Portfolio",
-      html: "<p>Hello! This is a test email from your Render backend.</p>",
+      html: "<p>Hello! This is a test email from your backend.</p>",
     });
     res.send("Test email sent!");
     console.log("Test email sent ✔️");
@@ -72,9 +86,9 @@ io.on("connection", (socket) => {
     // Send email only for first message
     if (users[socket.id].email && !users[socket.id].emailSent && text) {
       try {
-        await sgMail.send({
-          from: process.env.MY_EMAIL,
-          to: process.env.MY_EMAIL,
+        await transporter.sendMail({
+          from: process.env.GMAIL_USER,
+          to: process.env.GMAIL_USER,
           subject: `New Portfolio Chat from ${users[socket.id].email}`,
           html: `
             <h3>New Chat Started</h3>
