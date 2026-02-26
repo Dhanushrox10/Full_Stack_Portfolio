@@ -19,8 +19,8 @@ app.use(express.json());
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.GMAIL_USER,      // Your Gmail address
-    pass: process.env.GMAIL_APP_PASS,  // Gmail App Password
+    user: process.env.GMAIL_USER,     
+    pass: process.env.GMAIL_APP_PASS,
   },
   tls: { rejectUnauthorized: false },
 });
@@ -32,6 +32,11 @@ transporter.verify((err, success) => {
 });
 
 // -----------------------
+// TEST EMAIL ROUTE
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
 // TEST EMAIL ROUTE
 app.get("/test-email", async (req, res) => {
   try {
