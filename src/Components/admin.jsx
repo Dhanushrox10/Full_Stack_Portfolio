@@ -30,7 +30,7 @@ export default function Admin() {
   }, []);
 
   const login = () => {
-    if (password !== "nammadhan") {
+    if (password !== import.meta.env.VITE_ADMIN_PASSWORD) {
       setError("Wrong password");
       return;
     }
