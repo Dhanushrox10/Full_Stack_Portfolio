@@ -211,19 +211,19 @@ body:has(.admin-page) {
 
 /*Responsive*/
 @media (max-width: 768px) {
-  .admin-login{
+  .admin-login {
     height: 100dvh;
   }
-  
-  .admin-page{
+
+  .admin-page {
     height: 100dvh;
   }
 
   .admin-body {
     position: relative;
     flex-direction: column;
-    height: calc(100dvh - 55px); 
-    overflow: hidden;  
+    height: calc(100dvh - 55px);
+    overflow: hidden;
   }
 
   .admin-header {
@@ -277,14 +277,14 @@ body:has(.admin-page) {
   .admin-chat {
     width: 100%;
     padding: 10px;
-    height: 100%;            
-    overflow: hidden; 
+    height: 100%;
+    overflow: hidden;
   }
 
   .messages-box {
     padding: 8px;
-    flex: 1;      
-    overflow-y: auto;   
+    flex: 1;
+    overflow-y: auto;
   }
 
   .message span {

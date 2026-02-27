@@ -17,7 +17,7 @@ export default function Navbar() {
           if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
     );
     sections.forEach((section) => observer.observe(section));
     return () => sections.forEach((section) => observer.unobserve(section));
@@ -28,8 +28,10 @@ export default function Navbar() {
     const handleClickOutside = (e) => {
       if (
         menuOpen &&
-        menuRef.current && !menuRef.current.contains(e.target) &&
-        hamburgerRef.current && !hamburgerRef.current.contains(e.target)
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(e.target)
       ) {
         setMenuOpen(false);
       }
@@ -55,13 +57,47 @@ export default function Navbar() {
       </a>
 
       <ul className="nav-menu">
-        <li><a href="#home" className={active === "home" ? "active" : ""}>Home</a></li>
-        <li><a href="#about" className={active === "about" ? "active" : ""}>About</a></li>
-        <li><a href="#skills" className={active === "skills" ? "active" : ""}>Skills</a></li>
-        <li><a href="#education" className={active === "education" ? "active" : ""}>Education</a></li>
-        <li><a href="#projects" className={active === "projects" ? "active" : ""}>Projects</a></li>
-        <li><a href="#experience" className={active === "experience" ? "active" : ""}>Experience</a></li>
-        <li><a href="#contact" className={active === "contact" ? "active" : ""}>Contact</a></li>
+        <li>
+          <a href="#home" className={active === "home" ? "active" : ""}>
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="#about" className={active === "about" ? "active" : ""}>
+            About
+          </a>
+        </li>
+        <li>
+          <a href="#skills" className={active === "skills" ? "active" : ""}>
+            Skills
+          </a>
+        </li>
+        <li>
+          <a
+            href="#education"
+            className={active === "education" ? "active" : ""}
+          >
+            Education
+          </a>
+        </li>
+        <li>
+          <a href="#projects" className={active === "projects" ? "active" : ""}>
+            Projects
+          </a>
+        </li>
+        <li>
+          <a
+            href="#experience"
+            className={active === "experience" ? "active" : ""}
+          >
+            Experience
+          </a>
+        </li>
+        <li>
+          <a href="#contact" className={active === "contact" ? "active" : ""}>
+            Contact
+          </a>
+        </li>
       </ul>
 
       <div
@@ -75,13 +111,69 @@ export default function Navbar() {
       </div>
 
       <ul ref={menuRef} className={`mobile-menu ${menuOpen ? "active" : ""}`}>
-        <li><a href="#home" className={active === "home" ? "active" : ""} onClick={() => handleLinkClick("home")}>Home</a></li>
-        <li><a href="#about" className={active === "about" ? "active" : ""} onClick={() => handleLinkClick("about")}>About</a></li>
-        <li><a href="#skills" className={active === "skills" ? "active" : ""} onClick={() => handleLinkClick("skills")}>Skills</a></li>
-        <li><a href="#education" className={active === "education" ? "active" : ""} onClick={() => handleLinkClick("education")}>Education</a></li>
-        <li><a href="#projects" className={active === "projects" ? "active" : ""} onClick={() => handleLinkClick("projects")}>Projects</a></li>
-        <li><a href="#experience" className={active === "experience" ? "active" : ""} onClick={() => handleLinkClick("experience")}>Experience</a></li>
-        <li><a href="#contact" className={active === "contact" ? "active" : ""} onClick={() => handleLinkClick("contact")}>Contact</a></li>
+        <li>
+          <a
+            href="#home"
+            className={active === "home" ? "active" : ""}
+            onClick={() => handleLinkClick("home")}
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="#about"
+            className={active === "about" ? "active" : ""}
+            onClick={() => handleLinkClick("about")}
+          >
+            About
+          </a>
+        </li>
+        <li>
+          <a
+            href="#skills"
+            className={active === "skills" ? "active" : ""}
+            onClick={() => handleLinkClick("skills")}
+          >
+            Skills
+          </a>
+        </li>
+        <li>
+          <a
+            href="#education"
+            className={active === "education" ? "active" : ""}
+            onClick={() => handleLinkClick("education")}
+          >
+            Education
+          </a>
+        </li>
+        <li>
+          <a
+            href="#projects"
+            className={active === "projects" ? "active" : ""}
+            onClick={() => handleLinkClick("projects")}
+          >
+            Projects
+          </a>
+        </li>
+        <li>
+          <a
+            href="#experience"
+            className={active === "experience" ? "active" : ""}
+            onClick={() => handleLinkClick("experience")}
+          >
+            Experience
+          </a>
+        </li>
+        <li>
+          <a
+            href="#contact"
+            className={active === "contact" ? "active" : ""}
+            onClick={() => handleLinkClick("contact")}
+          >
+            Contact
+          </a>
+        </li>
       </ul>
     </nav>
   );
