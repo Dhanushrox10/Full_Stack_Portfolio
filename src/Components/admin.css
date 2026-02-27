@@ -211,10 +211,14 @@ body:has(.admin-page) {
 
 /*Responsive*/
 @media (max-width: 768px) {
+  .admin-page{
+    height: 100dvh;
+  }
+
   .admin-body {
     position: relative;
     flex-direction: column;
-    height: calc(100vh - 55px); 
+    height: calc(100dvh - 55px); 
     overflow: hidden;  
   }
 
