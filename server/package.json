@@ -14,7 +14,6 @@
   "dependencies": {
     "@getbrevo/brevo": "^4.0.1",
     "@sendgrid/mail": "^8.1.6",
-    "@sendinblue/client": "^3.3.1",
     "axios": "^1.13.5",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",

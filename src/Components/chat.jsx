@@ -15,44 +15,32 @@ export default function Chat() {
   const [emailVerified, setEmailVerified] = useState(false);
   const [step, setStep] = useState(0);
   const [inputDisabled, setInputDisabled] = useState(false);
-  const [userEmail, setUserEmail] = useState(""); // store email
+  const [userEmail, setUserEmail] = useState("");
 
-  // Chat text formatter (detect URLs)
   const formatText = (text) => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const parts = text.split(urlRegex);
     return parts.map((part, i) =>
       part.match(urlRegex) ? (
-        <a
-          key={i}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="chat-link"
-        >
+        <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="chat-link">
           {part}
         </a>
       ) : (
         part
-      ),
+      )
     );
   };
 
-  // Socket
+  // ── Socket setup ───────────────────────────────────────────────
   useEffect(() => {
     const socket = io("https://dhanush-portfolio-service.onrender.com");
     socketRef.current = socket;
 
     socket.emit("user-join");
 
-    // Admin online status
     socket.on("admin-status", (status) => {
       setOnline(status);
-
-      // Enable input if admin comes online and bot options exist
-      if (status) {
-        setInputDisabled(false);
-      }
+      if (status) setInputDisabled(false);
     });
 
     socket.on("admin-message", (message) => {
@@ -62,37 +50,28 @@ export default function Chat() {
     return () => socket.disconnect();
   }, []);
 
-  // Auto Scroll
+  // ── Auto-scroll ────────────────────────────────────────────────
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(
-        () => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
-        0,
-      );
-    }
+    if (open) setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 0);
   }, [open]);
 
-  // Click Outside
+  // ── Click outside to close ─────────────────────────────────────
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!open) return;
-
-      const clickedOutsideChat =
-        chatRef.current && !chatRef.current.contains(event.target);
-      const clickedToggle =
-        toggleRef.current && toggleRef.current.contains(event.target);
-
+      const clickedOutsideChat = chatRef.current && !chatRef.current.contains(event.target);
+      const clickedToggle = toggleRef.current && toggleRef.current.contains(event.target);
       if (clickedOutsideChat && !clickedToggle) setOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  // Intro Texts
+  // ── Start intro when chat opens (offline only, no messages yet) ─
   useEffect(() => {
     if (open && !online && messages.length === 0) startIntro();
   }, [open, online, messages.length]);
@@ -105,14 +84,8 @@ export default function Chat() {
   };
 
   const startIntro = () => {
-    addMessage({ sender: "bot", text: "Hi there! I’m Mochi😊" }, 500);
-    addMessage(
-      {
-        sender: "bot",
-        text: "I’m here to help you explore Dhanush’s portfolio🚀",
-      },
-      1800,
-    );
+    addMessage({ sender: "bot", text: "Hi there! I'm Mochi😊" }, 500);
+    addMessage({ sender: "bot", text: "I'm here to help you explore Dhanush's portfolio🚀" }, 1800);
     addMessage({ sender: "bot", text: "What is your email address🙂?" }, 2800);
     setStep(1);
   };
@@ -125,14 +98,14 @@ export default function Chat() {
     setUserEmail("");
   };
 
-  // Bot Message
+  // ── Send message ───────────────────────────────────────────────
   const sendMessage = () => {
     if (!msg.trim() || inputDisabled) return;
-
-    const text = msg;
+    const text = msg.trim();
     setMsg("");
     setMessages((prev) => [...prev, { sender: "user", text }]);
 
+    // ── Admin is ONLINE: just relay the message ──
     if (online) {
       socketRef.current.emit("user-message", {
         text,
@@ -141,10 +114,12 @@ export default function Chat() {
       return;
     }
 
+    // ── Offline flow ─────────────────────────────
+    // Step 1: collect email
     if (!emailVerified) {
       const emailRegex = /\S+@\S+\.\S+/;
       if (!emailRegex.test(text)) {
-        addMessage({ sender: "bot", text: "Please enter a valid email." }, 500);
+        addMessage({ sender: "bot", text: "Please enter a valid email address." }, 500);
         return;
       }
 
@@ -152,28 +127,28 @@ export default function Chat() {
       setUserEmail(text);
       setStep(2);
 
+      // Send email to server so admin sees it as user identification
       socketRef.current.emit("user-message", {
-        text: "User joined",
+        text,        // the email itself becomes the "first message"
         email: text,
+        first: true,
       });
 
-      addMessage(
-        { sender: "bot", text: "Superb! Now, what is your question?🤔" },
-        700,
-      );
+      addMessage({ sender: "bot", text: "Superb! Now, what is your question?🤔" }, 700);
       return;
     }
 
+    // Step 2: collect first question
     if (step === 2) {
       setStep(3);
+      // Send the actual question to the server
       socketRef.current.emit("user-message", { text, email: userEmail });
-
       addMessage(
         {
           sender: "bot",
           text: "Thanks for your question!🙌 The admin is notified and will be joining you shortly!😊",
         },
-        600,
+        600
       );
       addMessage(
         {
@@ -181,15 +156,15 @@ export default function Chat() {
           text: "Meanwhile, you can explore more about me:",
           options: ["About me", "No thanks"],
         },
-        1400,
+        1400
       );
     }
   };
 
-  // Options
+  // ── Option buttons ─────────────────────────────────────────────
   const handleOption = (option, index) => {
     setMessages((prev) =>
-      prev.map((m, i) => (i === index ? { ...m, optionsDisabled: true } : m)),
+      prev.map((m, i) => (i === index ? { ...m, optionsDisabled: true } : m))
     );
     setInputDisabled(!online);
     setMessages((prev) => [...prev, { sender: "user", text: option }]);
@@ -198,32 +173,24 @@ export default function Chat() {
       addMessage(
         {
           sender: "bot",
-          text: "I’m Dhanush😇, a Data Engineer and Full Stack Developer skilled in Frontend tools, Python, Node.js, React, and modern web technologies. I build responsive web applications and work on data driven and analytics based projects.🚀",
+          text: "I'm Dhanush😇, a Data Engineer and Full Stack Developer skilled in Frontend tools, Python, Node.js, React, and modern web technologies. I build responsive web applications and work on data-driven and analytics-based projects.🚀",
           options: ["Know more", "Contact admin"],
         },
-        600,
+        600
       );
     }
 
     if (option === "No thanks" || option === "Contact admin") {
       addMessage(
-        {
-          sender: "bot",
-          text: "You can contact the admin using the contact form.",
-          link: "#contact",
-        },
-        600,
+        { sender: "bot", text: "You can contact the admin using the contact form.", link: "#contact" },
+        600
       );
     }
 
     if (option === "Know more") {
       addMessage(
-        {
-          sender: "bot",
-          text: "Choose a platform:",
-          options: ["LinkedIn", "GitHub", "Back"],
-        },
-        600,
+        { sender: "bot", text: "Choose a platform:", options: ["LinkedIn", "GitHub", "Back"] },
+        600
       );
     }
 
@@ -234,7 +201,7 @@ export default function Chat() {
           text: "LinkedIn:\nhttps://www.linkedin.com/in/dhanush-s-68198b23b/",
           options: ["Back to Menu"],
         },
-        500,
+        500
       );
     }
 
@@ -245,40 +212,29 @@ export default function Chat() {
           text: "GitHub:\nhttps://github.com/Dhanushrox10",
           options: ["Back to Menu"],
         },
-        500,
+        500
       );
     }
 
     if (option === "Back") {
       addMessage(
-        {
-          sender: "bot",
-          text: "Meanwhile, you can explore more about me:",
-          options: ["About me", "No thanks"],
-        },
-        600,
+        { sender: "bot", text: "Meanwhile, you can explore more about me:", options: ["About me", "No thanks"] },
+        600
       );
     }
 
     if (option === "Back to Menu") {
       addMessage(
-        {
-          sender: "bot",
-          text: "Choose a platform:",
-          options: ["LinkedIn", "GitHub", "Back"],
-        },
-        600,
+        { sender: "bot", text: "Choose a platform:", options: ["LinkedIn", "GitHub", "Back"] },
+        600
       );
     }
   };
 
+  // ── Render ─────────────────────────────────────────────────────
   return (
     <>
-      <button
-        ref={toggleRef}
-        className="chat-toggle"
-        onClick={() => setOpen(!open)}
-      >
+      <button ref={toggleRef} className="chat-toggle" onClick={() => setOpen(!open)}>
         <i className="bi bi-chat-right-text-fill"></i>
       </button>
 
@@ -286,9 +242,7 @@ export default function Chat() {
         <div className="chat-container" ref={chatRef}>
           <div className="chat-header">
             <div className="header-left">
-              <span className="header-title">
-                {online ? "Admin Online" : "Mochi Assistant"}
-              </span>
+              <span className="header-title">{online ? "Admin Online" : "Mochi Assistant"}</span>
               <span className={online ? "status online" : "status offline"} />
             </div>
             <button className="restart-btn" onClick={restartChat}>
@@ -298,10 +252,7 @@ export default function Chat() {
 
           <div className="chat-messages">
             {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`message-row ${m.sender === "user" ? "right" : "left"}`}
-              >
+              <div key={i} className={`message-row ${m.sender === "user" ? "right" : "left"}`}>
                 {m.sender !== "user" && (
                   <img
                     src={m.sender === "admin" ? "/admin.png" : "/mochi.png"}
@@ -309,9 +260,7 @@ export default function Chat() {
                     alt=""
                   />
                 )}
-                <div
-                  className={`chat-bubble ${m.sender === "user" ? "bubble-user" : "bubble-bot"}`}
-                >
+                <div className={`chat-bubble ${m.sender === "user" ? "bubble-user" : "bubble-bot"}`}>
                   {formatText(m.text)}
                   {m.options && (
                     <div className="options">
@@ -350,10 +299,10 @@ export default function Chat() {
                 inputDisabled
                   ? "Select an option..."
                   : online
-                    ? "Message admin..."
-                    : emailVerified
-                      ? "Type your message..."
-                      : "Enter your email..."
+                  ? "Message admin..."
+                  : emailVerified
+                  ? "Type your message..."
+                  : "Enter your email..."
               }
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
