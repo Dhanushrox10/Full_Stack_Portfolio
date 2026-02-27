@@ -108,3 +108,17 @@ button,
   -webkit-user-select: none;
   user-select: none;
 }
+
+/*Scrollbar styles*/
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #311afe;
+  border-radius: 4px;
+}
