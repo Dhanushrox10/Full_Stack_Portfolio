@@ -135,9 +135,9 @@
 /* Responsive */
 @media (max-width: 768px) {
 
-    .hero {
+  .hero {
     height: auto;          /* let content define height */
-    min-height: 86vh;     
+    min-height: 100dvh;     
     padding-top: 20px;    
     padding-bottom: 50px;
     display: flex;
