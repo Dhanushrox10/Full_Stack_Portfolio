@@ -137,7 +137,7 @@
 
     .hero {
     height: auto;          /* let content define height */
-    min-height: 90vh;     
+    min-height: 85vh;     
     padding-top: 20px;    
     padding-bottom: 50px;
     display: flex;
