@@ -192,6 +192,9 @@
     font-size: 0.95rem;
     padding: 11px 12px 11px 38px;
   }
+    .textarea-icon i {
+    top: 10px;
+  }
 
   .contact-form button {
     align-self: flex-end;
@@ -201,4 +204,3 @@
     font-size: 0.95rem;
   }
 }
-
