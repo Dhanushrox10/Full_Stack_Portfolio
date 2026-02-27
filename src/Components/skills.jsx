@@ -8,7 +8,7 @@ import bootstrap from "../assets/images/bootstrap.png";
 import mysql from "../assets/images/mysql.png";
 import git from "../assets/images/git-vcs.png";
 import cprog from "../assets/images/c-prog.png";
-import github from "../assets/images/github.WEBP";
+import github from "../assets/images/github.webp";
 import mongodb from "../assets/images/mongodb.png";
 import sass from "../assets/images/sass.png";
 import nodejs from "../assets/images/nodejs.png";
