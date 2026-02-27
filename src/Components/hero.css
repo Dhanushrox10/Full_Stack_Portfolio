@@ -137,7 +137,7 @@
 
     .hero {
     height: auto;          /* let content define height */
-    min-height: auto;     
+    min-height: 90vh;     
     padding-top: 20px;    
     padding-bottom: 50px;
     display: flex;
@@ -199,10 +199,10 @@
   }
 
   .hero-image {
-    width: 250px;       
+    width: 320px;       
     max-width: 85%;
     height: auto;
-    margin-top: 0;  
+    margin-top: 20px;  
     display: block;
   }
 
