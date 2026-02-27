@@ -1,5 +1,5 @@
 import "./contact.css";
-import contactImg from "../assets/images/contact.png";
+import contactImg from "../assets/images/Contact.png";
 
 export default function Contact() {
   return (
