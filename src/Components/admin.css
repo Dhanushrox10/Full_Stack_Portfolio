@@ -211,6 +211,10 @@ body:has(.admin-page) {
 
 /*Responsive*/
 @media (max-width: 768px) {
+  .admin-login{
+    height: 100dvh;
+  }
+  
   .admin-page{
     height: 100dvh;
   }
