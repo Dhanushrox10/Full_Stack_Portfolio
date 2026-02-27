@@ -5,6 +5,25 @@ import logo from "../assets/images/logo.png";
 export default function Navbar() {
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const hamburgerRef = useRef(null);
+
+  // Close menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        menuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(e.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
 
   // Active section detection (mobile + desktop)
   useEffect(() => {
@@ -88,6 +107,7 @@ export default function Navbar() {
       </ul>
 
       <div
+        ref={hamburgerRef}
         className={`hamburger ${menuOpen ? "open" : ""}`}
         onClick={() => setMenuOpen(!menuOpen)}
       >
@@ -96,7 +116,7 @@ export default function Navbar() {
         <div className="bar"></div>
       </div>
 
-      <ul className={`mobile-menu ${menuOpen ? "active" : ""}`}>
+      <ul ref={menuRef} className={`mobile-menu ${menuOpen ? "active" : ""}`}>
         <li>
           <a
             href="#home"
