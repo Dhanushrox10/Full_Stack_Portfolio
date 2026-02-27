@@ -36,7 +36,7 @@ export default function About() {
               className="about-button"
               onClick={() =>
                 window.open(
-                  "https://drive.google.com/file/d/189OAC4OVBzOzh-Tal0szIZRIyYqPVqZy/view",
+                  "https://drive.google.com/file/d/1iFzvnAroFcJsuT2yhFdevnfozWVx-01o/view?usp=drive_link",
                   "_blank",
                 )
               }

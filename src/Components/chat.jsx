@@ -145,7 +145,7 @@ export default function Chat() {
       addMessage(
         {
           sender: "bot",
-          text: "Thanks for your question!🙌 The admin is notified and will be joining you shortly!😊",
+          text: "Thanks for your question!🙌 The admin will be joining you shortly!😊",
         },
         600
       );
@@ -181,7 +181,7 @@ export default function Chat() {
 
     if (option === "No thanks" || option === "Contact admin") {
       addMessage(
-        { sender: "bot", text: "You can contact the admin using the contact form.", link: "#contact" },
+        { sender: "bot", text: "You can contact the admin using the contact form. ", link: "#contact" },
         600
       );
     }
