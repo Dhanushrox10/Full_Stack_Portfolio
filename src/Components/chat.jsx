@@ -31,7 +31,7 @@ export default function Chat() {
     );
   };
 
-  // ── Socket setup ───────────────────────────────────────────────
+  // Socket setup
   useEffect(() => {
     const socket = io("https://dhanush-portfolio-service.onrender.com");
     socketRef.current = socket;
@@ -50,7 +50,7 @@ export default function Chat() {
     return () => socket.disconnect();
   }, []);
 
-  // ── Auto-scroll ────────────────────────────────────────────────
+  // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -59,7 +59,7 @@ export default function Chat() {
     if (open) setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 0);
   }, [open]);
 
-  // ── Click outside to close ─────────────────────────────────────
+  // Click outside to close
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!open) return;
@@ -71,7 +71,7 @@ export default function Chat() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  // ── Start intro when chat opens (offline only, no messages yet) ─
+  // Start intro when chat opens (offline only, no messages yet)
   useEffect(() => {
     if (open && !online && messages.length === 0) startIntro();
   }, [open, online, messages.length]);
@@ -98,14 +98,14 @@ export default function Chat() {
     setUserEmail("");
   };
 
-  // ── Send message ───────────────────────────────────────────────
+  // Send message
   const sendMessage = () => {
     if (!msg.trim() || inputDisabled) return;
     const text = msg.trim();
     setMsg("");
     setMessages((prev) => [...prev, { sender: "user", text }]);
 
-    // ── Admin is ONLINE: just relay the message ──
+    // Admin ONLINE
     if (online) {
       socketRef.current.emit("user-message", {
         text,
@@ -114,8 +114,7 @@ export default function Chat() {
       return;
     }
 
-    // ── Offline flow ─────────────────────────────
-    // Step 1: collect email
+    // Collect email
     if (!emailVerified) {
       const emailRegex = /\S+@\S+\.\S+/;
       if (!emailRegex.test(text)) {
@@ -129,7 +128,7 @@ export default function Chat() {
 
       // Send email to server so admin sees it as user identification
       socketRef.current.emit("user-message", {
-        text,        // the email itself becomes the "first message"
+        text,  
         email: text,
         first: true,
       });
@@ -138,7 +137,7 @@ export default function Chat() {
       return;
     }
 
-    // Step 2: collect first question
+    // Collect first question
     if (step === 2) {
       setStep(3);
       // Send the actual question to the server
@@ -161,7 +160,7 @@ export default function Chat() {
     }
   };
 
-  // ── Option buttons ─────────────────────────────────────────────
+  // Option buttons
   const handleOption = (option, index) => {
     setMessages((prev) =>
       prev.map((m, i) => (i === index ? { ...m, optionsDisabled: true } : m))
@@ -231,7 +230,7 @@ export default function Chat() {
     }
   };
 
-  // ── Render ─────────────────────────────────────────────────────
+  // Render 
   return (
     <>
       <button ref={toggleRef} className="chat-toggle" onClick={() => setOpen(!open)}>

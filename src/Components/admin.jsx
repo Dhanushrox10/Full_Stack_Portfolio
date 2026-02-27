@@ -40,7 +40,7 @@ export default function Admin() {
     socketRef.current = socket;
     socket.emit("register-admin");
 
-    // ONLY this one listener — no new-user-message
+    // Listener 
     socket.off("update-user-list").on("update-user-list", (data) => {
       setUsers(data);
       const currentUserId = selectedUserRef.current;

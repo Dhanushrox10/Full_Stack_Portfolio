@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
     }
 
     if (adminSocketId) {
-      io.to(adminSocketId).emit("update-user-list", users); // only this, nothing else
+      io.to(adminSocketId).emit("update-user-list", users); 
     }
   });
 
