@@ -33,7 +33,7 @@ export default function Chat() {
 
   // Socket setup
   useEffect(() => {
-    const socket = io("https://dhanush-portfolio-service.onrender.com");
+    const socket = io(import.meta.env.VITE_SOCKET_URL);
     socketRef.current = socket;
 
     socket.emit("user-join");
