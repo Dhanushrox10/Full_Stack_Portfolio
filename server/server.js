@@ -29,27 +29,16 @@ io.on("connection", (socket) => {
   socket.on("user-message", ({ text, email, first }) => {
     if (!users[socket.id]) users[socket.id] = { email: "", messages: [] };
 
-    // Save email FIRST before anything else
     if (first && email) {
       users[socket.id].email = email;
     }
 
-    // Only store actual questions, not the email itself
     if (!first) {
       users[socket.id].messages.push({ sender: "user", text });
     }
 
-    // Notify admin — send update-user-list (full state) + targeted new message
     if (adminSocketId) {
-      io.to(adminSocketId).emit("update-user-list", users); // always sync full state
-
-      if (!first) {
-        // Only send the new message event for actual chat messages
-        io.to(adminSocketId).emit("new-user-message", {
-          userId: socket.id,
-          text,
-        });
-      }
+      io.to(adminSocketId).emit("update-user-list", users); // only this, nothing else
     }
   });
 

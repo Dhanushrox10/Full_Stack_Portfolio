@@ -40,21 +40,12 @@ export default function Admin() {
     socketRef.current = socket;
     socket.emit("register-admin");
 
-    // Single source of truth — whenever server state changes, sync it all
-    socket.on("update-user-list", (data) => {
+    // ONLY this one listener — no new-user-message
+    socket.off("update-user-list").on("update-user-list", (data) => {
       setUsers(data);
-
-      // If a user is currently selected, keep their message view in sync too
       const currentUserId = selectedUserRef.current;
       if (currentUserId && data[currentUserId]) {
         setMessages(data[currentUserId].messages || []);
-      }
-    });
-
-    // Only used to append a new message live without waiting for full list update
-    socket.on("new-user-message", ({ userId, text }) => {
-      if (selectedUserRef.current === userId) {
-        setMessages((prev) => [...prev, { sender: "user", text }]);
       }
     });
 
