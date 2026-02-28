@@ -28,7 +28,7 @@ export default function Projects() {
         "React, Node.js, Express.js, HTML, CSS, JS, Web Socket, JS Libraries.",
       description:
         "Personal Portfolio Website. You’re already here — just scroll and explore!",
-      link: "#",
+      link: "https://github.com/Dhanushrox10/Full_Stack_Portfolio",
     },
   ];
 
@@ -44,8 +44,8 @@ export default function Projects() {
     const centerY = rect.height / 2;
 
     // tilt strength
-    const rotateY = ((centerX - x) / centerX) * 10; // left/right tilt
-    const rotateX = ((y - centerY) / centerY) * 10; // top/bottom tilt
+    const rotateY = ((centerX - x) / centerX) * 12; // left/right tilt
+    const rotateX = ((y - centerY) / centerY) * 12; // top/bottom tilt
 
     // opposite side comes up
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;

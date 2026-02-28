@@ -39,8 +39,6 @@ body,
 .slide-in-down {
   opacity: 0;
   backface-visibility: hidden; /* Critical blur fix */
-  perspective: 1000px;
-  transform-style: preserve-3d;
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
