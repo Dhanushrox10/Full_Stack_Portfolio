@@ -23,7 +23,7 @@ export default function Chat() {
     return parts.map((part, i) =>
       part.match(urlRegex) ? (
         <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="chat-link">
-          {part}
+          Visit Profile
         </a>
       ) : (
         part
@@ -172,7 +172,7 @@ export default function Chat() {
       addMessage(
         {
           sender: "bot",
-          text: "I'm Dhanush😇, a Data Engineer and Full Stack Developer skilled in Frontend tools, Python, Node.js, React, and modern web technologies. I build responsive web applications and work on data-driven and analytics-based projects.🚀",
+          text: "I'm Dhanush😇, A Data Engineer and Full Stack Developer skilled in Frontend tools, Python, Node.js, React, and modern web technologies. I build responsive web applications and work on data-driven and analytics-based projects.🚀",
           options: ["Know more", "Contact admin"],
         },
         600
