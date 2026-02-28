@@ -23,7 +23,7 @@
 }
 .chat-toggle i {
   position: relative;
-  top: 1px;
+  top: 2px;
   display: inline-block;
 }
 .chat-toggle:hover i {
@@ -238,11 +238,11 @@
 @media (max-width: 768px) {
 
   .chat-toggle {
-    width: 55px;
-    height: 55px;
-    font-size: 24px;
-    bottom: 15px;
-    right: 15px;
+    width: 57px;
+    height: 57px;
+    font-size: 25px;
+    bottom: 17px;
+    right: 17px;
   }
 
   .chat-container {
