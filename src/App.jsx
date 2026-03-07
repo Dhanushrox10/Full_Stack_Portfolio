@@ -71,20 +71,6 @@ export default function App() {
     };
   }, []);
 
-  //User switch tab
-useEffect(() => {
-  const handleVisibilityChange = () => {
-    if (document.hidden) {
-      document.title = "Come back soon❤️!";
-    } else {
-      document.title = "Dhanush | Data Engineer & Full Stack Developer";
-    }
-  };
-
-  document.addEventListener("visibilitychange", handleVisibilityChange);
-  return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
-}, []);
-
   return (
     <BrowserRouter>
       <Routes>
