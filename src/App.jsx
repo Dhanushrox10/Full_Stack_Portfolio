@@ -73,23 +73,16 @@ export default function App() {
 
   //User switch tab
 useEffect(() => {
-  document.title = "Dhanush | Data Engineer & Full Stack Developer";
-
-  const handleMouseLeave = () => {
-    document.title = "Come back soon❤️!";
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      document.title = "Come back soon❤️!";
+    } else {
+      document.title = "Dhanush | Data Engineer & Full Stack Developer";
+    }
   };
 
-  const handleMouseEnter = () => {
-    document.title = "Dhanush | Data Engineer & Full Stack Developer";
-  };
-
-  document.addEventListener("mouseleave", handleMouseLeave);
-  document.addEventListener("mouseenter", handleMouseEnter);
-
-  return () => {
-    document.removeEventListener("mouseleave", handleMouseLeave);
-    document.removeEventListener("mouseenter", handleMouseEnter);
-  };
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
 }, []);
 
   return (
