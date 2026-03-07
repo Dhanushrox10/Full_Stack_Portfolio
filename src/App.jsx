@@ -13,7 +13,8 @@ import Skills from "./Components/skills";
 import useinView from "./Hooks/useinView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function Portfolio() { // Portfolio Component
+function Portfolio() {
+  // Portfolio Component
   useinView(); // call the hook at the top level of the component to ensure it runs on every render
   return (
     <>
@@ -71,18 +72,22 @@ export default function App() {
   }, []);
 
   //User switch tab
-useEffect(() => {
-  const handleVisibilityChange = () => {
-    if (document.hidden) {
-      document.title = "Come back soon❤️!";
-    } else {
-      document.title = "Dhanush | Data Engineer & Full Stack Developer";
-    }
-  };
+  useEffect(() => {
+    // Set normal title when on site
+    document.title = "Dhanush | Data Engineer & Full Stack Developer";
 
-  document.addEventListener("visibilitychange", handleVisibilityChange);
-  return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
-}, []);
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.title = "Come back soon❤️!";
+      } else {
+        document.title = "Dhanush | Data Engineer & Full Stack Developer";
+      }
+    };
+    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
 
   return (
     <BrowserRouter>
