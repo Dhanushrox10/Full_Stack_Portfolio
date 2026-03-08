@@ -51,7 +51,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <a href="#" className="logo-name" onClick={() => handleLinkClick("home")}>
+      <a href="/" className="logo-name" onClick={() => handleLinkClick("home")}>
         <img src={logo} alt="Logo" />
         <h1>Dhanush</h1>
       </a>
