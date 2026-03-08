@@ -14,7 +14,7 @@ export default function About() {
             <img className="pic-2" src={site2} alt="Profile" />
           </div>
           <div className="about-text">
-            <h2>I'm Dhanush</h2>
+            <h2>I'm Dhanush Saravanan</h2>
             <h4>Data Engineer & Full Stack Developer</h4>
             <p>
               Hello! I'm a Databricks Certified Data Engineer Associate with a
