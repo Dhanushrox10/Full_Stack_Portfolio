@@ -11,15 +11,15 @@ export default function Projects() {
       stack: "Databricks, Apache Spark, Azure, Delta Lake, Python.",
       description:
         "Built a data processing pipeline and analytics platform for structured & unstructured data.",
-      link: "https://github.com/Dhanushrox10/Retail_And_Ecommerce_Analytics_Platform.git",
+      link: "https://github.com/Dhanushrox10/Retail_And_Ecommerce_Analytics_Platform",
     },
     {
       img: tripAdvisorImg,
       title: "Trip Advisor Review Analysis Engine",
-      stack: "Flask, Python, CNN, NLP, MySQL, Frontend: HTML, CSS, JavaScript.",
+      stack: "Flask, Python, CNN, NLP, MySQL, HTML, CSS, JavaScript.",
       description:
         "Created a website to search and recommend places based on reviews using NLP and CNN.",
-      link: "https://github.com/Dhanushrox10/Trip_Advisor_Review_Analysis_Engine.git",
+      link: "https://github.com/Dhanushrox10/Trip_Advisor_Review_Analysis_Engine",
     },
     {
       img: portfolioImg,
